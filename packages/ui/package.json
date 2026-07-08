@@ -1,0 +1,53 @@
+{
+  "name": "@mohit/ui",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "preview": "vite preview",
+    "storybook": "storybook dev -p 6006",
+    "build:storybook": "storybook build",
+    "build-storybook": "storybook build"
+  },
+  "peerDependencies": {
+    "react": "^19",
+    "react-dom": "^19",
+    "react-router-dom": "^7"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4",
+    "react-icons": "^5.6.0",
+    "tailwindcss": "^4"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "^5.2.1",
+    "@storybook/addon-a11y": "^10.4.6",
+    "@storybook/addon-docs": "^10.4.6",
+    "@storybook/addon-mcp": "^0.6.0",
+    "@storybook/addon-vitest": "^10.4.6",
+    "@storybook/react-vite": "^10.4.6",
+    "@vitejs/plugin-react": "^6",
+    "@vitest/browser-playwright": "^4.1.9",
+    "@vitest/coverage-v8": "^4.1.9",
+    "eslint-plugin-storybook": "^10.4.6",
+    "playwright": "^1.61.1",
+    "prop-types": "^15.8.1",
+    "react": "^19",
+    "react-dom": "^19",
+    "storybook": "^10.4.6",
+    "vite": "^8",
+    "vitest": "^4.1.9"
+  }
+}

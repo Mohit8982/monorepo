@@ -1,0 +1,31 @@
+# ---------------- Base ----------------
+FROM node:20 AS base
+WORKDIR /app
+
+RUN corepack enable
+
+# Copy workspace config
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json ./
+
+# Copy full monorepo (important for shared package)
+COPY . .
+
+# Install dependencies (monorepo aware)
+RUN pnpm install --frozen-lockfile
+
+# ---------------- Build ----------------
+FROM base AS builder
+
+# Build ONLY e-comm using turbo
+RUN pnpm turbo run build --filter=e-comm...
+
+# ---------------- Runtime ----------------
+FROM nginx:alpine
+
+# Vite output folder
+COPY apps/e-comm/dist /usr/share/nginx/html
+
+# SPA routing fix
+COPY apps/e-comm/nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
