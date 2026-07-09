@@ -84,6 +84,12 @@ app.get("/api", (req, res) => {
   });
 });
 
+app.get("/api/test-health", (req, res) => {
+  return res.send({
+    success: true,
+  });
+});
+
 app.get("/api/verify", (req, res) => {
   const token = req.cookies?.access_token;
 
