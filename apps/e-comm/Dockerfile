@@ -23,9 +23,9 @@ RUN pnpm turbo run build --filter=e-comm...
 FROM nginx:alpine
 
 # Vite output folder
-COPY apps/e-comm/dist /usr/share/nginx/html
+COPY --from=builder /app/apps/e-comm/dist /usr/share/nginx/html
 
 # SPA routing fix
-COPY apps/e-comm/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/apps/e-comm/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
