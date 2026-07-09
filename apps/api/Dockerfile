@@ -40,7 +40,7 @@ RUN addgroup -S nodejs && adduser -S express -G nodejs
 # Copy application
 COPY --from=installer --chown=express:nodejs /app .
 
-RUN chmod 600 /app/apps/api/private.pem
+# RUN chmod 600 /app/apps/api/private.pem
 
 # Switch to non-root user
 USER express
