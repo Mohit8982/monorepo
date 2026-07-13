@@ -1,12 +1,13 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { visualizer } from "rollup-plugin-visualizer";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig(({ mode }) => {
   return {
     plugins: [
       react(),
-
+      tailwindcss(),
       mode === "analyze" &&
         visualizer({
           open: true,
@@ -15,6 +16,12 @@ export default defineConfig(({ mode }) => {
 
     server: {
       port: 4200,
+      proxy: {
+        "/api": {
+          target: "http://localhost:3000",
+          changeOrigin: true,
+        },
+      },
     },
 
     // IMPORTANT for deployment
