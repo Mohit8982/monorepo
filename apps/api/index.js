@@ -1,7 +1,6 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import cors from "cors";
-import fs from "fs";
 import cookieParser from "cookie-parser";
 import data, { products } from "./data.js";
 import console from "console";
@@ -32,7 +31,8 @@ const dummyUsers = [
   { name: "Sidhant Jain", id: 4559, role: "employee", username: "sid8982" },
 ];
 
-const privateKey = fs.readFileSync("private.pem", "utf8");
+const privateKey =
+  "f99688ec36d40b6c43f6d699a86cda02d39978abe59d2cebb3f3cf694e624894dd06fb443f84d856ea6c04bd50aabd33d4e7ee2e46f50b97c3274d62319f24ae";
 
 function verifyToken(req, res, next) {
   const token = req.cookies?.access_token;
@@ -44,11 +44,9 @@ function verifyToken(req, res, next) {
     });
   }
 
-  const publicKey = fs.readFileSync("public.pem", "utf8");
-
   try {
-    const payload = jwt.verify(token, publicKey, {
-      algorithms: ["RS256"],
+    const payload = jwt.verify(token, privateKey, {
+      algorithms: ["HS256"],
     });
 
     req.user = payload;
@@ -65,9 +63,9 @@ function verifyToken(req, res, next) {
 app.get("/api", (req, res) => {
   const payload = { userId: "12345", role: "admin" };
 
-  const token = jwt.sign(payload, privateKey, {
-    algorithm: "RS256",
-    expiresIn: "15m",
+  const token = jwt.sign(payload, process.env.JWT_SECRET, {
+    algorithm: "HS256",
+    expiresIn: "1h",
   });
 
   res.cookie("access_token", token, {
@@ -100,11 +98,9 @@ app.get("/api/verify", (req, res) => {
     });
   }
 
-  const publicKey = fs.readFileSync("public.pem", "utf8");
-
   try {
-    const decoded = jwt.verify(token, publicKey, {
-      algorithms: ["RS256"],
+    const decoded = jwt.verify(token, privateKey, {
+      algorithms: ["HS256"],
     });
 
     res.json({
@@ -156,8 +152,8 @@ app.post("/api/login", async (req, res) => {
       const payload = { userId: findUser.id, role: findUser.role };
 
       const token = jwt.sign(payload, privateKey, {
-        algorithm: "RS256",
-        expiresIn: "15m",
+        algorithm: "HS256",
+        expiresIn: "1h",
       });
 
       res.cookie("access_token", token, {
