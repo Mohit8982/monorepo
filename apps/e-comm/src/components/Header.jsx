@@ -31,23 +31,48 @@ const Header = () => {
   };
 
   return (
-    <header className="header">
-      <div className="mobileMenu">{/* <HamburgerMenu /> */}</div>
+    <header
+      className="
+    h-20
+    bg-gradient-to-r
+    from-[#cdd9f2]
+    to-[#b0e391]
+    flex
+    items-center
+    px-10
+    gap-10
+    sticky
+    top-0
+    z-50
+  "
+    >
       <Logo />
-      <GlobalSearch
-        suggestions={searchResult}
-        error={error}
-        loading={loading}
-        onSearch={handleSearch}
-      />
-      <nav className="navLinks">
-        <div className="loginBtn">
-          {isLogin ? (
-            <h3 onClick={handleLogout}>Logout</h3>
-          ) : (
-            <h3 onClick={handleLogin}>Login</h3>
-          )}
-        </div>
+
+      <div className="flex-1 flex justify-center">
+        <GlobalSearch
+          suggestions={searchResult}
+          error={error}
+          loading={loading}
+          onSearch={handleSearch}
+        />
+      </div>
+
+      <nav className="flex items-center gap-5">
+        {isLogin ? (
+          <button
+            onClick={handleLogout}
+            className="bg-white text-blue-600 px-5 py-2 rounded-lg shadow"
+          >
+            Logout
+          </button>
+        ) : (
+          <button
+            onClick={handleLogin}
+            className="bg-white text-blue-600 px-5 py-2 rounded-lg shadow"
+          >
+            Login
+          </button>
+        )}
 
         {isLogin && <Cart />}
       </nav>

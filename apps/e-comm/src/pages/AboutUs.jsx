@@ -1,74 +1,35 @@
-// import { StatCard, FeatureCard, InfoCard } from "../../components/";
-
-const stats = [
-  {
-    value: "1000+",
-    label: "Products",
-  },
-  {
-    value: "500+",
-    label: "Happy Customers",
-  },
-  {
-    value: "50+",
-    label: "Trusted Brands",
-  },
-  {
-    value: "24/7",
-    label: "Customer Support",
-  },
-];
-
-const features = [
-  {
-    icon: "🚚",
-    title: "Fast Delivery",
-    description: "Quick and secure shipping across the country.",
-  },
-  {
-    icon: "🔒",
-    title: "Secure Payments",
-    description: "Multiple trusted payment options for safe transactions.",
-  },
-  {
-    icon: "💯",
-    title: "Quality Products",
-    description: "Only genuine products from verified sellers and brands.",
-  },
-  {
-    icon: "📞",
-    title: "24/7 Support",
-    description: "Dedicated support team available whenever you need help.",
-  },
-];
-
 const AboutUs = () => {
   return (
-    <div className="aboutPage">
-      <section className="heroSection">
-        <h1>About ShopSphere</h1>
-        <p>
+    <div className="min-h-screen bg-gray-100">
+      {/* Hero Section */}
+      <section className="bg-gradient-to-br from-slate-400 to-gray-300 px-5 py-20 text-center text-white">
+        <h1 className="mb-4 text-5xl font-bold">About ShopSphere</h1>
+
+        <p className="mx-auto max-w-3xl text-lg leading-8">
           Your one-stop destination for quality products, trusted brands and
           seamless online shopping experiences.
         </p>
       </section>
 
-      <section className="aboutSection">
-        <div className="content">
-          <h2>Who We Are</h2>
+      {/* About Section */}
+      <section className="mx-auto my-12 max-w-6xl px-5">
+        <div className="rounded-xl bg-white p-10 shadow-md">
+          <h2 className="mb-5 text-3xl font-semibold text-gray-900">
+            Who We Are
+          </h2>
 
-          <p>
+          <p className="mb-4 leading-8 text-gray-600">
             ShopSphere is an online marketplace dedicated to providing customers
             with a wide range of products at competitive prices.
           </p>
 
-          <p>
+          <p className="mb-4 leading-8 text-gray-600">
             From smartphones and laptops to home essentials and accessories, we
             bring the best products from trusted brands directly to your
             doorstep.
           </p>
 
-          <p>
+          <p className="leading-8 text-gray-600">
             Our mission is to make online shopping simple, reliable and
             accessible for everyone by combining technology, convenience and
             excellent customer service.
@@ -76,36 +37,36 @@ const AboutUs = () => {
         </div>
       </section>
 
-      <section className="statsSection">
-        {/* {stats.map((stat) => (
-          <StatCard key={stat.label} value={stat.value} label={stat.label} />
-        ))} */}
-      </section>
+      {/* Why Choose Us */}
+      <section className="mx-auto max-w-6xl px-5 pb-16">
+        <h2 className="mb-8 text-center text-3xl font-semibold text-gray-900">
+          Why Choose Us?
+        </h2>
 
-      <section className="missionSection">
-        {/* <InfoCard
-          title="Our Mission"
-          description="To deliver exceptional value through innovative technology, transparent pricing and customer-centric services."
-        />
+        <div className="grid gap-6 md:grid-cols-3">
+          <div className="rounded-xl bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
+            <h3 className="mb-3 text-xl font-semibold">Trusted Brands</h3>
+            <p className="leading-7 text-gray-600">
+              We partner with top brands to ensure authentic and quality
+              products for our customers.
+            </p>
+          </div>
 
-        <InfoCard
-          title="Our Vision"
-          description="To become the most trusted and customer-friendly e-commerce platform by continuously improving shopping experiences."
-        /> */}
-      </section>
+          <div className="rounded-xl bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
+            <h3 className="mb-3 text-xl font-semibold">Fast Delivery</h3>
+            <p className="leading-7 text-gray-600">
+              Get your orders delivered quickly and securely right to your
+              doorstep.
+            </p>
+          </div>
 
-      <section className="teamSection">
-        <h2>Why Choose Us?</h2>
-
-        <div className="features">
-          {/* {features.map((feature) => (
-            // <FeatureCard
-            //   key={feature.title}
-            //   icon={feature.icon}
-            //   title={feature.title}
-            //   description={feature.description}
-            // />
-          ))} */}
+          <div className="rounded-xl bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
+            <h3 className="mb-3 text-xl font-semibold">Excellent Support</h3>
+            <p className="leading-7 text-gray-600">
+              Our customer support team is always ready to assist you whenever
+              you need help.
+            </p>
+          </div>
         </div>
       </section>
     </div>

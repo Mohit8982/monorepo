@@ -5,8 +5,6 @@ import { ROLES } from "../constants/roles";
 import { publicRoutes } from "./publicRoutes";
 import { productRoutes } from "./productsRoutes";
 import { cartRoutes } from "./cartRoutes";
-import { adminRoutes } from "./adminRoutes";
-import { employeeRoutes } from "./employeeRoutes";
 import CustomerLayout from "../layouts/CustomerLayout";
 import { Loadable } from "@mohit/ui";
 
@@ -28,16 +26,7 @@ export default function AppRoutes() {
         },
       ],
     },
-    // Admin-only routes
-    {
-      element: <RouteValidator allowedRoles={[ROLES.ADMIN]} />,
-      children: adminRoutes,
-    },
-    //Employee-only routes
-    {
-      element: <RouteValidator allowedRoles={[ROLES.EMPLOYEE]} />,
-      children: employeeRoutes,
-    },
+
     {
       path: "*",
       element: <NotFound />,

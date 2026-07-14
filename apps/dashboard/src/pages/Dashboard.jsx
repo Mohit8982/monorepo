@@ -1,4 +1,4 @@
-import Main from "../../components/admin/Main";
+import Main from "../../../e-comm/src/components/admin/Main";
 
 const Dashboard = () => {
   return (

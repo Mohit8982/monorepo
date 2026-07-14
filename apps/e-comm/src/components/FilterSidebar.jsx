@@ -1,63 +1,79 @@
 const FilterSidebar = () => {
   return (
-    <aside className="filtersSidebar">
-      <h2>Filters</h2>
+    <aside
+      className="
+        sticky top-20 h-fit
+        w-[280px] min-w-[280px]
+        border border-gray-200
+        bg-white p-5
+      "
+    >
+      <h2 className="mb-5 text-xl font-semibold">Filters</h2>
 
-      <div className="filterSection">
-        <h3>Brand</h3>
+      {/* Brand */}
+      <div className="mb-6 border-t border-gray-200 pt-4">
+        <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide">
+          Brand
+        </h3>
 
-        <label>
-          <input type="checkbox" />
+        <label className="mb-2 flex cursor-pointer items-center gap-2.5 text-sm text-gray-700">
+          <input type="checkbox" className="h-4 w-4" />
           Apple
         </label>
 
-        <label>
-          <input type="checkbox" />
+        <label className="mb-2 flex cursor-pointer items-center gap-2.5 text-sm text-gray-700">
+          <input type="checkbox" className="h-4 w-4" />
           Samsung
         </label>
 
-        <label>
-          <input type="checkbox" />
+        <label className="mb-2 flex cursor-pointer items-center gap-2.5 text-sm text-gray-700">
+          <input type="checkbox" className="h-4 w-4" />
           Vivo
         </label>
 
-        <label>
-          <input type="checkbox" />
+        <label className="flex cursor-pointer items-center gap-2.5 text-sm text-gray-700">
+          <input type="checkbox" className="h-4 w-4" />
           Oppo
         </label>
       </div>
 
-      <div className="filterSection">
-        <h3>RAM</h3>
+      {/* RAM */}
+      <div className="mb-6 border-t border-gray-200 pt-4">
+        <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide">
+          RAM
+        </h3>
 
-        <label>
-          <input type="checkbox" />4 GB
+        <label className="mb-2 flex cursor-pointer items-center gap-2.5 text-sm text-gray-700">
+          <input type="checkbox" className="h-4 w-4" />4 GB
         </label>
 
-        <label>
-          <input type="checkbox" />6 GB
+        <label className="mb-2 flex cursor-pointer items-center gap-2.5 text-sm text-gray-700">
+          <input type="checkbox" className="h-4 w-4" />6 GB
         </label>
 
-        <label>
-          <input type="checkbox" />8 GB
+        <label className="flex cursor-pointer items-center gap-2.5 text-sm text-gray-700">
+          <input type="checkbox" className="h-4 w-4" />8 GB
         </label>
       </div>
 
-      <div className="filterSection">
-        <h3>Price</h3>
+      {/* Price */}
+      <div className="border-t border-gray-200 pt-4">
+        <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide">
+          Price
+        </h3>
 
-        <label>
-          <input type="checkbox" />
+        <label className="mb-2 flex cursor-pointer items-center gap-2.5 text-sm text-gray-700">
+          <input type="checkbox" className="h-4 w-4" />
           Under ₹10,000
         </label>
 
-        <label>
-          <input type="checkbox" />
+        <label className="mb-2 flex cursor-pointer items-center gap-2.5 text-sm text-gray-700">
+          <input type="checkbox" className="h-4 w-4" />
           ₹10,000 - ₹20,000
         </label>
 
-        <label>
-          <input type="checkbox" />
+        <label className="flex cursor-pointer items-center gap-2.5 text-sm text-gray-700">
+          <input type="checkbox" className="h-4 w-4" />
           Above ₹20,000
         </label>
       </div>

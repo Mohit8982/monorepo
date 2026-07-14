@@ -1,12 +1,10 @@
-
-
 const SearchSuggestions = ({ suggestions, handleClick }) => {
   return (
-    <div className="suggestionsContainer">
+    <div className="absolute top-[calc(100%+4px)] left-0 z-[1000] max-h-[300px] w-full overflow-y-auto rounded-md border border-gray-200 bg-white shadow-lg">
       {suggestions.map((item, index) => (
         <div
           key={index}
-          className="suggestionItem"
+          className="cursor-pointer px-4 py-3 text-gray-800 hover:bg-gray-100"
           onClick={() => handleClick(item)}
         >
           {item.name}
@@ -14,33 +12,6 @@ const SearchSuggestions = ({ suggestions, handleClick }) => {
       ))}
     </div>
   );
-  // const dispatch = useDispatch();
-  // const { searchResult } = useSelector((state) => state.search);
-
-  // const getProducts = () => {
-  //   dispatch(updateProduct(searchResult));
-  //   dispatch(updateSearchResults([]));
-  // };
-
-  // return (
-  //   <div className="suggestionsContainer">
-  //     {suggestions.map((item, index) =>
-  //       item.id ? (
-  //         <div
-  //           key={index}
-  //           className="suggestionItem"
-  //           onClick={() => getProducts(item)}
-  //         >
-  //           {item.name}
-  //         </div>
-  //       ) : (
-  //         <div key={index} className="suggestionItem">
-  //           {item.name}
-  //         </div>
-  //       ),
-  //     )}
-  //   </div>
-  // );
 };
 
 export default SearchSuggestions;

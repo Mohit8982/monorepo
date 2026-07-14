@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getFormDetails } from "../../redux/dynamicForm";
+import { getFormDetails } from "../../../e-comm/src/redux/dynamicForm";
 import { Loader, DynamicForm, Heading } from "@mohit/ui";
 
 const AddProducts = () => {

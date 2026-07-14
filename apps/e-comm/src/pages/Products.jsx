@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProducts } from "../redux/productSlice";
-import { Card, Pagination    } from "@mohit/ui";
+import { Card, Pagination } from "@mohit/ui";
 import FilterSidebar from "../components/FilterSidebar";
 
 const Products = () => {
@@ -26,9 +26,9 @@ const Products = () => {
 
   return (
     <>
-      <div className="productsPage">
+      <div className="flex gap-5 p-5 items-start">
         <FilterSidebar />
-        <div className="productsContainer">
+        <div className="flex-1 min-w-0 space-y-5">
           {products.map((product) => (
             <Card key={product.id} cardData={product} />
           ))}

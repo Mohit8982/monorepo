@@ -17,8 +17,6 @@ function App() {
           credentials: "include",
         });
 
-        console.log(response.json());
-
         if (response.ok) {
           const data = await response.json();
           dispatch(setLogin(data.user));

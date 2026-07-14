@@ -5,94 +5,143 @@ const ProductsDescription = () => {
   const stateData = location.state;
 
   return (
-    <>
-      <div className="productPage">
-        <div className="productImageSection">
-          <img src={stateData.image} alt="iPhone 16" className="productImage" />
+    <div
+      className="
+        mx-auto grid max-w-[1400px] gap-5 p-5
+        lg:grid-cols-[minmax(250px,350px)_1fr_minmax(220px,280px)]
+      "
+    >
+      {/* Product Image Section */}
+      <div
+        className="
+          sticky top-[90px] h-fit rounded-lg bg-white
+          p-5 shadow-sm
+        "
+      >
+        <img
+          src={stateData.image}
+          alt={stateData.name}
+          className="h-[350px] w-full object-contain"
+        />
 
-          <div className="actionButtons">
-            <button>Add To Cart</button>
-            <button>Buy Now</button>
-          </div>
-        </div>
+        <div className="mt-5 flex gap-3">
+          <button
+            className="
+              flex-1 rounded-md bg-gradient-to-r
+              from-[#a4b3d2] to-[#71d3ac]
+              px-4 py-3 font-semibold text-white
+              transition hover:opacity-90
+            "
+          >
+            Add To Cart
+          </button>
 
-        <div className="productInfoSection">
-          <h1>{stateData.name}</h1>
-
-          <div className="ratingSection">
-            <span className="rating">4.8 ★</span>
-            <span>1250 Ratings & Reviews</span>
-          </div>
-
-          <p className="description">{stateData.description}</p>
-
-          <h3>Highlights</h3>
-
-          <ul className="highlights">
-            <li>128 GB Storage</li>
-            <li>8 GB RAM</li>
-            <li>A18 Bionic Processor</li>
-            <li>48 MP + 12 MP Camera</li>
-            <li>6.1 Inch OLED Display</li>
-            <li>3561 mAh Battery</li>
-          </ul>
-
-          <h3>Specifications</h3>
-
-          <table>
-            <tbody>
-              <tr>
-                <td>Brand</td>
-                <td>Apple</td>
-              </tr>
-              <tr>
-                <td>Display</td>
-                <td>6.1 inch OLED</td>
-              </tr>
-              <tr>
-                <td>Processor</td>
-                <td>A18 Bionic</td>
-              </tr>
-              <tr>
-                <td>RAM</td>
-                <td>8 GB</td>
-              </tr>
-              <tr>
-                <td>Storage</td>
-                <td>128 GB</td>
-              </tr>
-              <tr>
-                <td>Battery</td>
-                <td>3561 mAh</td>
-              </tr>
-              <tr>
-                <td>Camera</td>
-                <td>48 MP + 12 MP</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div className="priceSection">
-          <div className="priceWrapper">
-            <span className="sellingPrice">₹{stateData.price}</span>
-            <span className="discount">15% Off</span>
-          </div>
-
-          <div className="mrp">
-            MRP <s>₹94,999</s>
-          </div>
-
-          <p className="delivery">Free Delivery</p>
-
-          <p className="stock">
-            Stock Available: <strong>10</strong>
-          </p>
-
-          <button className="buyNowBtn">Buy Now</button>
+          <button
+            className="
+              flex-1 rounded-md bg-gradient-to-r
+              from-[#a4b3d2] to-[#71d3ac]
+              px-4 py-3 font-semibold text-white
+              transition hover:opacity-90
+            "
+          >
+            Buy Now
+          </button>
         </div>
       </div>
-    </>
+
+      {/* Product Info */}
+      <div className="rounded-lg bg-white p-5 shadow-sm">
+        <h1 className="mb-3 text-3xl font-semibold text-gray-900">
+          {stateData.name}
+        </h1>
+
+        <div className="mb-5 flex items-center gap-3">
+          <span
+            className="
+              rounded bg-green-600
+              px-3 py-1 text-sm font-semibold text-white
+            "
+          >
+            4.8 ★
+          </span>
+
+          <span className="text-gray-500">1250 Ratings & Reviews</span>
+        </div>
+
+        <p className="mb-6 leading-7 text-gray-600">{stateData.description}</p>
+
+        <h3 className="mb-3 text-lg font-semibold">Highlights</h3>
+
+        <ul className="mb-8 list-disc space-y-2 pl-5 text-gray-600">
+          <li>128 GB Storage</li>
+          <li>8 GB RAM</li>
+          <li>A18 Bionic Processor</li>
+          <li>48 MP + 12 MP Camera</li>
+          <li>6.1 Inch OLED Display</li>
+          <li>3561 mAh Battery</li>
+        </ul>
+
+        <h3 className="mb-4 text-lg font-semibold">Specifications</h3>
+
+        <table className="w-full border-collapse">
+          <tbody>
+            {[
+              ["Brand", "Apple"],
+              ["Display", "6.1 inch OLED"],
+              ["Processor", "A18 Bionic"],
+              ["RAM", "8 GB"],
+              ["Storage", "128 GB"],
+              ["Battery", "3561 mAh"],
+              ["Camera", "48 MP + 12 MP"],
+            ].map(([label, value]) => (
+              <tr key={label} className="border-b border-gray-200">
+                <td className="w-[180px] py-3 text-gray-500">{label}</td>
+
+                <td className="py-3 text-gray-800">{value}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Price Section */}
+      <div
+        className="
+          h-fit rounded-lg bg-white
+          p-5 shadow-sm
+          lg:max-w-[300px]
+        "
+      >
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="text-4xl font-semibold text-gray-900">
+            ₹{stateData.price}
+          </span>
+
+          <span className="font-semibold text-green-600">15% Off</span>
+        </div>
+
+        <div className="mt-2 text-gray-500">
+          MRP <s>₹94,999</s>
+        </div>
+
+        <p className="mt-4 font-medium text-green-700">Free Delivery</p>
+
+        <p className="mt-3">
+          Stock Available: <strong>10</strong>
+        </p>
+
+        <button
+          className="
+            mt-5 w-full rounded-md
+            bg-orange-500 py-3
+            font-semibold text-white
+            transition hover:bg-orange-600
+          "
+        >
+          Buy Now
+        </button>
+      </div>
+    </div>
   );
 };
 

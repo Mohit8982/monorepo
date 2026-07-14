@@ -28,12 +28,21 @@ const GlobalSearch = ({
   };
 
   return (
-    <div className="searchContainer">
+    <div className="relative  w-[500px] mx-auto my-5">
       <input
         type="text"
         placeholder={placeholder}
         value={value}
         onChange={(e) => handleSearch(e.target.value)}
+        className="
+          w-full
+          px-4 py-3
+          border border-gray-300
+          rounded-md
+          bg-white
+          text-base
+          outline-none
+        "
       />
 
       {loading && <div>Loading...</div>}
