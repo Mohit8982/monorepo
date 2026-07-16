@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // health
-app.get("/health", (req, res) => res.send("ok"));
+app.get("/api/health", (req, res) => res.send("ok"));
 
 // public auth routes
 app.use("/api/auth", authRouter);
