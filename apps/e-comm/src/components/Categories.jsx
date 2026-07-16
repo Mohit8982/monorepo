@@ -48,7 +48,7 @@ const Categories = () => {
               flex-col items-center gap-1.5
               transition-all duration-200
               hover:text-blue-500
-              ${isActive ? "font-semibold text-black" : ""}
+              ${isActive ? "font-semibold text-slate-700" : ""}
             `}
           >
             <div

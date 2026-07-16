@@ -1,1 +1,39 @@
 @import "tailwindcss";
+
+@layer base {
+  html {
+    font-size: 14px;
+  }
+
+  body {
+    @apply text-slate-700 bg-slate-50;
+    font-family: Inter, sans-serif;
+    @apply bg-slate-50;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    @apply text-slate-900 font-semibold;
+  }
+}
+
+@layer components {
+  .heading-1 {
+    @apply text-3xl font-semibold text-slate-900;
+  }
+
+  .heading-2 {
+    @apply text-2xl font-semibold text-slate-900;
+  }
+
+  .body-text {
+    @apply text-sm text-slate-600;
+  }
+
+  .muted-text {
+    @apply text-sm text-slate-500;
+  }
+}

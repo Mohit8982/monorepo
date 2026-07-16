@@ -17,3 +17,4 @@ export { default as TextField } from "./TextField";
 export { default as Toast } from "./Toast";
 export { default as Loadable } from "./Loadable";
 export { default as ScrollToTop } from "./ScrollToTop";
+export { default as ProductCard } from "./ProductCard";

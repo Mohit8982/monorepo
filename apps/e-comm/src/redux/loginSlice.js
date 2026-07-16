@@ -12,7 +12,7 @@ const initialState = {
 export const doLogin = createAsyncThunk(
   "/verifyOtp",
   async (params, { rejectWithValue }) => {
-    const login = await fetch("/api/login", {
+    const login = await fetch("/api/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -33,7 +33,7 @@ export const doLogin = createAsyncThunk(
 export const logoutApp = createAsyncThunk(
   "/logout",
   async (_, { rejectWithValue }) => {
-    const login = await fetch("/api/logout", {
+    const login = await fetch("/api/auth/logout", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

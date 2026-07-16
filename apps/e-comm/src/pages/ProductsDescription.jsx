@@ -1,8 +1,61 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 const ProductsDescription = () => {
+  const { id } = useParams();
   const location = useLocation();
   const stateData = location.state;
+
+  // now `id` is the route param from /products/:id
+  console.log(id, stateData);
+
+  if (!stateData) {
+    return (
+      <div className="mx-auto max-w-[1400px] p-5">
+        <div className="rounded-lg bg-white p-8 text-center shadow-sm">
+          <h1 className="mb-3 text-2xl font-semibold text-gray-900">
+            Product not found
+          </h1>
+          <p className="text-gray-600">
+            No product data was provided. Please go back and select a product
+            again.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  const {
+    name = "Unnamed Product",
+    image = "",
+    price = "0",
+    description = "No description available.",
+    highlights,
+    specifications,
+  } = stateData;
+
+  const highlightItems = highlights ?? [
+    "128 GB Storage",
+    "8 GB RAM",
+    "A18 Bionic Processor",
+    "48 MP + 12 MP Camera",
+    "6.1 Inch OLED Display",
+    "3561 mAh Battery",
+  ];
+
+  const specificationItems =
+    Array.isArray(specifications) && specifications.length
+      ? specifications
+      : Object.entries(
+          specifications ?? {
+            Brand: "Apple",
+            Display: "6.1 inch OLED",
+            Processor: "A18 Bionic",
+            RAM: "8 GB",
+            Storage: "128 GB",
+            Battery: "3561 mAh",
+            Camera: "48 MP + 12 MP",
+          },
+        );
 
   return (
     <div
@@ -19,8 +72,8 @@ const ProductsDescription = () => {
         "
       >
         <img
-          src={stateData.image}
-          alt={stateData.name}
+          src={image}
+          alt={name}
           className="h-[350px] w-full object-contain"
         />
 
@@ -51,9 +104,7 @@ const ProductsDescription = () => {
 
       {/* Product Info */}
       <div className="rounded-lg bg-white p-5 shadow-sm">
-        <h1 className="mb-3 text-3xl font-semibold text-gray-900">
-          {stateData.name}
-        </h1>
+        <h1 className="mb-3 text-3xl font-semibold text-gray-900">{name}</h1>
 
         <div className="mb-5 flex items-center gap-3">
           <span
@@ -68,35 +119,26 @@ const ProductsDescription = () => {
           <span className="text-gray-500">1250 Ratings & Reviews</span>
         </div>
 
-        <p className="mb-6 leading-7 text-gray-600">{stateData.description}</p>
+        <p className="mb-6 leading-7 text-gray-600">{description}</p>
 
         <h3 className="mb-3 text-lg font-semibold">Highlights</h3>
 
         <ul className="mb-8 list-disc space-y-2 pl-5 text-gray-600">
-          <li>128 GB Storage</li>
-          <li>8 GB RAM</li>
-          <li>A18 Bionic Processor</li>
-          <li>48 MP + 12 MP Camera</li>
-          <li>6.1 Inch OLED Display</li>
-          <li>3561 mAh Battery</li>
+          {highlightItems.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
         </ul>
 
         <h3 className="mb-4 text-lg font-semibold">Specifications</h3>
 
         <table className="w-full border-collapse">
           <tbody>
-            {[
-              ["Brand", "Apple"],
-              ["Display", "6.1 inch OLED"],
-              ["Processor", "A18 Bionic"],
-              ["RAM", "8 GB"],
-              ["Storage", "128 GB"],
-              ["Battery", "3561 mAh"],
-              ["Camera", "48 MP + 12 MP"],
-            ].map(([label, value]) => (
-              <tr key={label} className="border-b border-gray-200">
+            {specificationItems.map(([label, value], index) => (
+              <tr
+                key={`${label}-${index}`}
+                className="border-b border-gray-200"
+              >
                 <td className="w-[180px] py-3 text-gray-500">{label}</td>
-
                 <td className="py-3 text-gray-800">{value}</td>
               </tr>
             ))}
@@ -113,9 +155,7 @@ const ProductsDescription = () => {
         "
       >
         <div className="flex flex-wrap items-center gap-3">
-          <span className="text-4xl font-semibold text-gray-900">
-            ₹{stateData.price}
-          </span>
+          <span className="text-4xl font-semibold text-gray-900">₹{price}</span>
 
           <span className="font-semibold text-green-600">15% Off</span>
         </div>

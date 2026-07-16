@@ -45,11 +45,11 @@ COPY --from=installer --chown=express:nodejs /app .
 # Switch to non-root user
 USER express
 
-WORKDIR /app/apps/api
+WORKDIR /app/apps/api/
 
 EXPOSE 3000
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
     CMD wget --spider http://localhost:3000/health || exit 1
 
-CMD ["node", "index.js"]
+CMD ["node", "src/index.js"]
