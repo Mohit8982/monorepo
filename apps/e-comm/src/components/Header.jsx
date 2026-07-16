@@ -31,51 +31,86 @@ const Header = () => {
   };
 
   return (
-    <header
-      className="
-    h-20
-    bg-gradient-to-r
-    from-[#cdd9f2]
-    to-[#b0e391]
-    flex
-    items-center
-    px-10
-    gap-10
-    sticky
-    top-0
-    z-50
-  "
-    >
-      <Logo />
+    <header className="sticky top-0 z-50 bg-[#2874f0] h-14 shadow-md">
+      <div className="max-w-[1248px] mx-auto h-full flex items-center gap-8 px-4">
+        {/* Logo */}
+        <Logo />
 
-      <div className="flex-1 flex justify-center">
-        <GlobalSearch
-          suggestions={searchResult}
-          error={error}
-          loading={loading}
-          onSearch={handleSearch}
-        />
+        {/* Search */}
+        <div className="flex-1 flex justify-center">
+          <div className="w-full max-w-[560px]">
+            <GlobalSearch
+              suggestions={searchResult}
+              error={error}
+              loading={loading}
+              onSearch={handleSearch}
+            />
+          </div>
+        </div>
+
+        {/* Right Navigation */}
+        <nav className="flex items-center gap-10 text-white text-[16px] font-medium">
+          {isLogin ? (
+            <button
+              onClick={handleLogout}
+              className="
+            bg-white
+            text-[#2874f0]
+            px-10
+            py-[5px]
+            font-semibold
+            shadow-sm
+            rounded-sm
+          "
+            >
+              Logout
+            </button>
+          ) : (
+            <button
+              onClick={handleLogin}
+              className="
+            bg-white
+            text-[#2874f0]
+            px-10
+            py-[5px]
+            font-semibold
+            shadow-sm
+            rounded-sm
+          "
+            >
+              Login
+            </button>
+          )}
+
+          <button className="whitespace-nowrap hover:text-gray-200 transition">
+            Become a Seller
+          </button>
+
+          <button className="flex items-center gap-1 hover:text-gray-200 transition">
+            More
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-3 h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
+
+          {isLogin && (
+            <div className="flex items-center gap-2 cursor-pointer hover:text-gray-200">
+              <Cart />
+            </div>
+          )}
+        </nav>
       </div>
-
-      <nav className="flex items-center gap-5">
-        {isLogin ? (
-          <button
-            onClick={handleLogout}
-            className="bg-white text-blue-600 px-5 py-2 rounded-lg shadow"
-          >
-            Logout
-          </button>
-        ) : (
-          <button
-            onClick={handleLogin}
-            className="bg-white text-blue-600 px-5 py-2 rounded-lg shadow"
-          >
-            Login
-          </button>
-        )}
-
-        {isLogin && <Cart />}
-      </nav>
     </header>
   );
 };
