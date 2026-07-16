@@ -28,8 +28,6 @@ const Login = () => {
   };
 
   useEffect(() => {
-    console.log("component", isLogin);
-
     if (isLogin) {
       switch (user?.role) {
         case "admin":
