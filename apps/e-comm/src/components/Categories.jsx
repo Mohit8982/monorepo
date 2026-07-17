@@ -4,7 +4,7 @@ import {
   FaLaptop,
   FaHome,
   FaGamepad,
-  FaMotorcycle,
+  FaShoppingBag,
 } from "react-icons/fa";
 
 import {
@@ -13,27 +13,39 @@ import {
 } from "react-icons/md";
 
 const categories = [
-  { id: 1, name: "For You", icon: "🛍️" },
-  { id: 2, name: "Fashion", icon: <FaTshirt /> },
-  { id: 3, name: "Mobiles", icon: <FaMobileAlt /> },
-  { id: 4, name: "Beauty", icon: <MdOutlineFaceRetouchingNatural /> },
-  { id: 5, name: "Electronics", icon: <FaLaptop /> },
-  { id: 6, name: "Home", icon: <FaHome /> },
-  { id: 7, name: "Appliances", icon: <MdOutlineKitchen /> },
-  { id: 8, name: "Toys", icon: <FaGamepad /> },
-  { id: 9, name: "Food", icon: "🍔" },
-  { id: 10, name: "Auto", icon: "🚗" },
-  { id: 11, name: "2 Wheelers", icon: <FaMotorcycle /> },
+  {
+    id: 1,
+    name: "For You",
+    icon: <FaShoppingBag className="text-yellow-500" />,
+  },
+  { id: 2, name: "Fashion", icon: <FaTshirt className="text-yellow-500" /> },
+  { id: 3, name: "Mobiles", icon: <FaMobileAlt className="text-yellow-500" /> },
+  {
+    id: 4,
+    name: "Beauty",
+    icon: <MdOutlineFaceRetouchingNatural className="text-yellow-500" />,
+  },
+  {
+    id: 5,
+    name: "Electronics",
+    icon: <FaLaptop className="text-yellow-500" />,
+  },
+  { id: 6, name: "Home", icon: <FaHome className="text-yellow-500" /> },
+  {
+    id: 7,
+    name: "Appliances",
+    icon: <MdOutlineKitchen className="text-yellow-500" />,
+  },
+  { id: 8, name: "Toys", icon: <FaGamepad className="text-yellow-500" /> },
 ];
 
 const Categories = () => {
   return (
     <div
       className="
-      sticky top-0 z-40
+      h-30
       flex items-center
       gap-8
-      overflow-x-auto
       whitespace-nowrap
       bg-white
       px-6 py-2
@@ -62,7 +74,7 @@ const Categories = () => {
             <div
               className={`
               flex h-9 w-9 items-center justify-center
-              text-[26px]
+              text-[30px] mb-2
               ${isActive ? "rounded-xl bg-blue-50" : ""}
             `}
             >
@@ -70,7 +82,7 @@ const Categories = () => {
             </div>
 
             {/* Label */}
-            <span className="text-[15px]  font-medium leading-none whitespace-nowrap">
+            <span className="text-[20px]  font-medium leading-none whitespace-nowrap">
               {item.name}
             </span>
 
