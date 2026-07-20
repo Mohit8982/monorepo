@@ -55,18 +55,16 @@ const Login = () => {
           className="w-full max-w-md rounded-xl bg-white p-10 shadow-[0_4px_20px_rgba(0,0,0,0.08)]"
           onSubmit={(e) => handleFormSubmit(e)}
         >
-          <div className="mb-6 flex flex-col">
+          <div className="mb-4 flex flex-col">
             <label className="mb-2 font-semibold text-gray-800">Username</label>
-
             <input
               type="text"
               value={username}
               placeholder="Enter Username"
               onChange={(e) => setUsername(e.target.value)}
-              className="h-[55px] w-48 rounded-lg border-2 border-gray-300 pl-3 text-2xl outline-none transition-all focus:border-blue-600"
+              className="h-[55px] rounded-lg border-2 border-gray-300 pl-3 text-2xl outline-none transition-all focus:border-blue-600"
             />
           </div>
-
           {username && (
             <div className="mb-4 flex flex-col">
               <label className="mb-2 font-semibold text-gray-800">OTP</label>
@@ -82,7 +80,7 @@ const Login = () => {
                     onKeyDown={(e) => handleKeyDown(e, index)}
                     className="
             h-14
-            w-14
+            w-21
             rounded-lg
             border-2
             border-gray-300
@@ -100,12 +98,13 @@ const Login = () => {
               </div>
             </div>
           )}
-
-          <input
-            className="mt-3 w-full cursor-pointer rounded-lg bg-blue-600 p-3 text-base font-semibold text-white transition-all hover:bg-blue-700 active:scale-[0.98]"
-            type="submit"
-            value="Submit"
-          />
+          <div className="mb-4 flex flex-col">
+            <input
+              className="cursor-pointer rounded-lg bg-blue-600 p-3 text-base font-semibold text-white transition-all hover:bg-blue-700 active:scale-[0.98]"
+              type="submit"
+              value="Submit"
+            />
+          </div>
         </form>
 
         {error && (

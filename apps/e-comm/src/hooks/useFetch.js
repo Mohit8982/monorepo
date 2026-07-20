@@ -1,17 +1,25 @@
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-export const useFetch = (url, options) => {
-  const [error, setError] = useState(null);
+export const useFetch = (url, options = {}) => {
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
+
+  const optionsRef = useRef(options);
+  const controllerRef = useRef(null);
+
+  useEffect(() => {
+    optionsRef.current = options;
+  }, [options]);
 
   const fetchData = useCallback(
     async (signal) => {
-      try {
-        setLoading(true);
+      setLoading(true);
+      setError(null);
 
+      try {
         const response = await fetch(url, {
-          ...options,
+          ...optionsRef.current,
           signal,
         });
 
@@ -21,30 +29,32 @@ export const useFetch = (url, options) => {
 
         const result = await response.json();
         setData(result);
-      } catch (error) {
-        if (error.name !== "AbortError") {
-          setError(error);
+      } catch (err) {
+        if (err.name !== "AbortError") {
+          setError(err);
         }
       } finally {
         setLoading(false);
       }
     },
-    [url, options],
+    [url],
   );
 
-  useEffect(() => {
+  const executeFetch = useCallback(() => {
+    controllerRef.current?.abort();
     const controller = new AbortController();
-
-    // eslint-disable-next-line react-hooks/set-state-in-effectk
+    controllerRef.current = controller;
     fetchData(controller.signal);
-
-    return () => controller.abort();
   }, [fetchData]);
 
-  const refetch = () => {
-    const controller = new AbortController();
-    fetchData(controller.signal);
-  };
+  useEffect(() => {
+    Promise.resolve().then(executeFetch);
+    return () => controllerRef.current?.abort();
+  }, [executeFetch]);
+
+  const refetch = useCallback(() => {
+    executeFetch();
+  }, [executeFetch]);
 
   return {
     data,
