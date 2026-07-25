@@ -1,0 +1,15 @@
+<div class="products-container products p-6">
+  @if (productService.loading()) {
+    <!-- Loader -->
+    <app-product-card-skeleton [count]="8"> </app-product-card-skeleton>
+  } @else if (productService.products().length === 0) {
+    <app-empty-state></app-empty-state>
+  } @else {
+    <app-carousel></app-carousel>
+    <div class="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      @for (product of productService.products(); track product.id) {
+        <app-product-card [product]="product" (click)="viewProductDetails(product.id)" />
+      }
+    </div>
+  }
+</div>

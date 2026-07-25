@@ -1,0 +1,20 @@
+<div class="relative mx-auto mt-4 max-w-[1440px]">
+  <!-- Image -->
+  <img [src]="banners()[currentIndex()]" class="h-[260px] w-full rounded-lg object-cover" />
+
+  <!-- Left Arrow -->
+  <button
+    (click)="previous()"
+    class="absolute left-3 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white shadow-lg hover:bg-gray-100"
+  >
+    ❮
+  </button>
+
+  <!-- Right Arrow -->
+  <button
+    (click)="next()"
+    class="absolute right-3 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white shadow-lg hover:bg-gray-100"
+  >
+    ❯
+  </button>
+</div>

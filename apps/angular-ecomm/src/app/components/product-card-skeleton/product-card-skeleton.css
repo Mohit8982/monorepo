@@ -1,0 +1,65 @@
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  border: 1px solid #ececec;
+  border-radius: 12px;
+  overflow: hidden;
+  background: white;
+}
+
+.image {
+  height: 220px;
+}
+
+.content {
+  padding: 16px;
+}
+
+.title {
+  height: 20px;
+  width: 80%;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  height: 16px;
+  width: 60%;
+  margin-bottom: 20px;
+}
+
+.price {
+  height: 18px;
+  width: 35%;
+  margin-bottom: 20px;
+}
+
+.button {
+  height: 38px;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: #e5e7eb;
+}
+
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+  animation: shimmer 1.2s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}

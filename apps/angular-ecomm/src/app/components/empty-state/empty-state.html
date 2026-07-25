@@ -1,0 +1,64 @@
+<div
+  class="flex min-h-[500px] flex-col items-center justify-center rounded-xl bg-white p-8 text-center shadow-sm"
+>
+  <div class="mb-6 flex h-28 w-28 items-center justify-center rounded-full bg-blue-50 text-6xl">
+    📦
+  </div>
+
+  <h2 class="text-2xl font-semibold text-gray-800">No Products Found</h2>
+
+  <p class="mt-3 max-w-md text-gray-500">
+    We couldn't find any products matching this category. Try exploring another category or browse
+    all available products.
+  </p>
+
+  <div class="mt-8 flex flex-wrap justify-center gap-4">
+    <button
+      routerLink="/"
+      class="rounded-lg bg-[#2874f0] px-6 py-3 font-medium text-white transition hover:bg-blue-700"
+    >
+      Browse All Products
+    </button>
+
+    <button
+      onclick="history.back()"
+      class="rounded-lg border border-gray-300 px-6 py-3 font-medium text-gray-700 transition hover:bg-gray-100"
+    >
+      Go Back
+    </button>
+  </div>
+
+  <div class="mt-10 rounded-lg bg-gray-50 px-6 py-4">
+    <p class="font-medium text-gray-700">You can also try:</p>
+
+    <div class="mt-4 flex flex-wrap justify-center gap-3">
+      <a
+        routerLink="/category/fashion"
+        class="rounded-full bg-white px-4 py-2 text-sm shadow hover:bg-blue-50"
+      >
+        👕 Fashion
+      </a>
+
+      <a
+        routerLink="/category/mobiles"
+        class="rounded-full bg-white px-4 py-2 text-sm shadow hover:bg-blue-50"
+      >
+        📱 Mobiles
+      </a>
+
+      <a
+        routerLink="/category/electronics"
+        class="rounded-full bg-white px-4 py-2 text-sm shadow hover:bg-blue-50"
+      >
+        💻 Electronics
+      </a>
+
+      <a
+        routerLink="/category/home"
+        class="rounded-full bg-white px-4 py-2 text-sm shadow hover:bg-blue-50"
+      >
+        🏠 Home
+      </a>
+    </div>
+  </div>
+</div>

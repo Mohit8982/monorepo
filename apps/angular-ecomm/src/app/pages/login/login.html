@@ -1,0 +1,85 @@
+<div class="flex min-h-screen items-center justify-center bg-gray-100 px-4">
+  <div class="flex w-full max-w-4xl overflow-hidden rounded-lg bg-white shadow-xl">
+    <div class="hidden w-2/5 flex-col justify-between bg-[#2874f0] p-10 text-white md:flex">
+      <div>
+        <h2 class="text-3xl font-semibold">Demo Login</h2>
+        <p class="mt-4 text-lg text-blue-100">Login using one of the demo accounts.</p>
+      </div>
+
+      <div class="rounded-md bg-blue-500/20 p-4">
+        <h3 class="mb-3 text-lg font-semibold">Demo Credentials</h3>
+        <div class="space-y-2 text-sm">
+          <div class="flex justify-between">
+            <span>mohit</span>
+            <span>1234</span>
+          </div>
+          <div class="flex justify-between">
+            <span>admin</span>
+            <span>0000</span>
+          </div>
+          <div class="flex justify-between">
+            <span>john</span>
+            <span>5678</span>
+          </div>
+          <div class="flex justify-between">
+            <span>guest</span>
+            <span>9999</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-1 p-10">
+      <h2 class="mb-8 text-3xl font-semibold text-gray-800">Welcome Back</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <p class="mb-8 text-sm text-gray-500">Enter your username and 4-digit OTP to continue.</p>
+        @if (authService.errorMessage()) {
+          <p class="mb-4 text-sm text-red-500">{{ authService.errorMessage() }}</p>
+        }
+        <!-- Username -->
+        <div class="mb-6">
+          <label class="mb-2 block text-sm font-medium text-gray-700"> Username </label>
+
+          <input
+            type="text"
+            formControlName="username"
+            placeholder="Enter username"
+            class="w-full rounded-md border border-gray-300 px-4 py-3 outline-none transition focus:border-[#2874f0] focus:ring-2 focus:ring-blue-100"
+          />
+
+          @if (loginForm.get('username')?.invalid && loginForm.get('username')?.touched) {
+            <p class="mt-1 text-sm text-red-500">Username is required.</p>
+          }
+        </div>
+
+        <!-- OTP -->
+        <div class="mb-8">
+          <label class="mb-2 block text-sm font-medium text-gray-700"> 4-Digit OTP </label>
+
+          <input
+            type="password"
+            formControlName="otp"
+            maxlength="4"
+            placeholder="••••"
+            class="w-full rounded-md border border-gray-300 px-4 py-3 text-center text-2xl tracking-[1rem] outline-none transition focus:border-[#2874f0] focus:ring-2 focus:ring-blue-100"
+          />
+
+          @if (loginForm.get('otp')?.invalid && loginForm.get('otp')?.touched) {
+            <p class="mt-1 text-sm text-red-500">Please enter a valid 4-digit OTP.</p>
+          }
+        </div>
+
+        <button
+          type="submit"
+          [disabled]="loginForm.invalid"
+          class="w-full cursor-pointer rounded-md bg-[#fb641b] py-3 text-lg font-semibold text-white transition hover:bg-[#f75d10] disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          Login
+        </button>
+      </form>
+      <p class="mt-8 text-center text-sm text-gray-500">
+        This is a demo login screen. Use one of the credentials shown on the left.
+      </p>
+    </div>
+  </div>
+</div>
