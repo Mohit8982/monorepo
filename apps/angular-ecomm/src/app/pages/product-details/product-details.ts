@@ -12,5 +12,9 @@ export class ProductDetails {
   route = inject(ActivatedRoute);
   productService = inject(Product);
   id = Number(this.route.snapshot.params['id']);
-  product = computed(() => this.productService.products().find((p) => p.id === this.id));
+
+  constructor() {
+    this.productService.getProductById(this.id);
+    this.productService.searchResults.set([]);
+  }
 }

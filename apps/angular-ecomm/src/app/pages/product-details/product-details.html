@@ -1,4 +1,4 @@
-@if (product()) {
+@if (productService.productData()) {
   <div class="mx-auto max-w-7xl bg-white p-6">
     <div class="grid gap-10 lg:grid-cols-2">
       <!-- Left Section -->
@@ -6,29 +6,32 @@
         <!-- Thumbnails -->
         <div class="flex flex-col gap-3">
           <img
-            [src]="product()?.image"
+            [src]="productService.productData()?.image"
             class="h-20 w-20 cursor-pointer rounded border object-cover hover:border-blue-500"
           />
 
           <img
-            [src]="product()?.image"
+            [src]="productService.productData()?.image"
             class="h-20 w-20 cursor-pointer rounded border object-cover hover:border-blue-500"
           />
 
           <img
-            [src]="product()?.image"
+            [src]="productService.productData()?.image"
             class="h-20 w-20 cursor-pointer rounded border object-cover hover:border-blue-500"
           />
 
           <img
-            [src]="product()?.image"
+            [src]="productService.productData()?.image"
             class="h-20 w-20 cursor-pointer rounded border object-cover hover:border-blue-500"
           />
         </div>
 
         <!-- Main Image -->
         <div class="flex-1">
-          <img [src]="product()?.image" class="w-full rounded border object-contain" />
+          <img
+            [src]="productService.productData()?.image"
+            class="w-full rounded border object-contain"
+          />
 
           <div class="mt-6 flex gap-4">
             <button
@@ -59,7 +62,7 @@
         </div>
 
         <div class="mt-6 flex items-center gap-3">
-          <span class="text-4xl font-semibold"> ₹{{ product()?.price }} </span>
+          <span class="text-4xl font-semibold"> ₹{{ productService.productData()?.price }} </span>
 
           <span class="text-xl text-gray-400 line-through"> ₹1,59,900 </span>
 

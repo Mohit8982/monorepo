@@ -48,6 +48,24 @@ export class ProductsController {
     );
   }
 
+  @Get("/search")
+  async search(
+    @Query("q") q?: string,
+    @Query("page") page?: string,
+    @Query("limit") limit?: string,
+  ) {
+    console.log("query::", q);
+    if (!q) {
+      throw new BadRequestException("q query param is required");
+    }
+
+    return this.productService.search(
+      q,
+      page ? parseInt(page) : 1,
+      limit ? parseInt(limit) : 10,
+    );
+  }
+
   @Get(":id")
   async findOne(@Param("id") id: string) {
     return this.productService.findOne(parseInt(id));

@@ -111,4 +111,22 @@ export class ProductService {
 
     return filteredProducts;
   }
+
+  async search(q: string, page: number = 1, limit: number = 10) {
+    const searchText = q.toLowerCase();
+    const filtered = this.products.filter(
+      (p) =>
+        p.name.toLowerCase().includes(searchText) ||
+        p.category.toLowerCase().includes(searchText) ||
+        p.brand.toLocaleLowerCase().includes(searchText),
+    );
+
+    const start = (page - 1) * limit;
+    return {
+      data: filtered.slice(start, start + limit),
+      total: filtered.length,
+      page,
+      limit,
+    };
+  }
 }

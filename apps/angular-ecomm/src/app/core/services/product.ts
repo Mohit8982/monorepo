@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { ApiService } from './api';
 
 @Injectable({
@@ -11,6 +11,9 @@ export class Product {
 
   products = signal<any[]>([]);
   loading = signal(false);
+  searchResults = signal<any[]>([]);
+  searching = signal(false);
+  productData = signal<any>(null);
 
   private readonly API_URL = this.api.products.list;
 
@@ -40,6 +43,43 @@ export class Product {
       error: (err) => {
         console.error(err);
         this.loading.set(false);
+      },
+    });
+  }
+
+  searchProducts(query: string) {
+    if (!query.trim()) {
+      this.searchResults.set([]);
+      return;
+    }
+
+    this.searching.set(true);
+
+    const params = new HttpParams().set('q', query).set('page', 1).set('limit', 10);
+
+    this.http
+      .get<any[]>(`${this.API_URL}/search`, {
+        params,
+      })
+      .subscribe({
+        next: (products: any) => {
+          this.searchResults.set(products.data);
+          this.searching.set(false);
+        },
+        error: () => {
+          this.searchResults.set([]);
+          this.searching.set(false);
+        },
+      });
+  }
+
+  getProductById(id: number) {
+    this.http.get(`${this.API_URL}/${id}`).subscribe({
+      next: (product) => {
+        this.productData.set(product);
+      },
+      error: () => {
+        this.productData.set(null);
       },
     });
   }
