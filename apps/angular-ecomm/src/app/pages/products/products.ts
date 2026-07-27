@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Product } from '../../services/product';
+import { Product } from '../../core/services/product';
 import { ProductCard } from '../../components/product-card/product-card';
 import { Carousel } from '../../components/carousel/carousel';
 import { EmptyState } from '../../components/empty-state/empty-state';

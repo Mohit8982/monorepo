@@ -1,5 +1,25 @@
-<header class="sticky top-0 z-[9999] border-b border-gray-200 bg-white shadow-sm">
-  <div class="mx-auto flex h-16 max-w-[1400px] items-center gap-6 px-6">
+<header class="sticky top-0 z-[9999] border-b bg-white shadow-sm">
+  <div class="mx-auto flex h-14 items-center justify-between px-4 sm:hidden">
+    <!-- Left -->
+    <div class="flex items-center gap-3">
+      <button class="rounded-md p-2 hover:bg-gray-100" (click)="openDrawer()">
+        <lucide-angular [img]="Menu" class="h-6 w-6"> </lucide-angular>
+      </button>
+
+      <app-logo></app-logo>
+    </div>
+
+    <!-- Right -->
+    <app-cart-button></app-cart-button>
+  </div>
+
+  <!-- Search -->
+  <div class="px-4 pb-3 sm:hidden">
+    <app-search-bar></app-search-bar>
+  </div>
+
+  <!-- Desktop -->
+  <div class="mx-auto hidden h-16 max-w-[1400px] items-center gap-6 px-6 sm:flex">
     <app-logo></app-logo>
 
     <div class="flex-1">
@@ -8,8 +28,11 @@
 
     <nav class="flex items-center gap-2">
       <app-user-menu></app-user-menu>
-
       <app-cart-button></app-cart-button>
     </nav>
   </div>
+
+  @if (drawerOpen()) {
+    <app-mobile-menu (close)="closeDrawer()"> </app-mobile-menu>>
+  }
 </header>

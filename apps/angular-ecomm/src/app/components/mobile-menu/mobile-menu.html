@@ -1,0 +1,17 @@
+<!-- Backdrop -->
+<div class="fixed inset-0 z-[9998] bg-black/40" (click)="onClose()"></div>
+
+<!-- Drawer -->
+<aside class="fixed left-0 top-0 z-[9999] h-full w-72 bg-white shadow-xl">
+  <div class="flex items-center justify-between border-b p-4">
+    <h2 class="text-lg font-semibold">Menu</h2>
+    <button class="rounded p-2 hover:bg-gray-100" (click)="onClose()">✕</button>
+  </div>
+
+  <nav class="flex flex-col p-4 space-y-4">
+    <a routerLink="/">Home</a>
+    <a routerLink="/categories">Categories</a>
+    <a routerLink="/orders">Orders</a>
+    <a routerLink="/cart">Cart</a>
+  </nav>
+</aside>

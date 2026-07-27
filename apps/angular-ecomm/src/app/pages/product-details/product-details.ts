@@ -1,6 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Product } from '../../services/product';
+import { Product } from '../../core/services/product';
 
 @Component({
   selector: 'app-product-details',

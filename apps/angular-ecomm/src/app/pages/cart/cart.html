@@ -1,1 +1,48 @@
-<p>cart works!</p>
+<div class="mx-auto max-w-7xl px-4 py-8">
+  @if (!this.auth.user()) {
+    <app-empty-cart></app-empty-cart>
+  } @else {
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-900">Shopping Cart</h1>
+      <p class="mt-1 text-gray-500">3 items in your cart</p>
+    </div>
+
+    <div class="grid gap-8 lg:grid-cols-3">
+      <section class="space-y-4 lg:col-span-2">
+        <app-cart-items></app-cart-items>
+        <app-cart-items></app-cart-items>
+        <app-cart-items></app-cart-items>
+      </section>
+
+      <aside>
+        <div class="sticky top-24 rounded-xl border bg-white p-6 shadow-sm">
+          <h2 class="text-xl font-semibold">Order Summary</h2>
+          <div class="mt-6 space-y-4">
+            <div class="flex justify-between">
+              <span class="text-gray-600">Subtotal</span>
+              <span>$329.97</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600">Shipping</span>
+              <span class="text-green-600">FREE</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600">Tax</span>
+              <span>$26.40</span>
+            </div>
+            <hr />
+            <div class="flex justify-between text-lg font-bold">
+              <span>Total</span>
+              <span>$356.37</span>
+            </div>
+          </div>
+          <button
+            class="mt-6 w-full rounded-lg bg-blue-600 py-3 font-medium text-white transition hover:bg-blue-700"
+          >
+            Proceed to Checkout
+          </button>
+        </div>
+      </aside>
+    </div>
+  }
+</div>

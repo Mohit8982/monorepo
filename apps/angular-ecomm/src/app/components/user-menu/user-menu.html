@@ -3,7 +3,7 @@
     <!-- User -->
     <div class="flex cursor-pointer items-center gap-2 px-3 py-2">
       <i class="fa-regular fa-circle-user"></i>
-      <span>Hello! {{ authService.user()?.username }}</span>
+      <h5 class="text-bold">Hello! {{ authService.user()?.username }}</h5>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="h-4 w-4"
@@ -38,6 +38,7 @@
         <!-- Logout -->
         <button
           class="flex w-full gap-4 border-t border-gray-100 px-5 py-3 text-left text-red-600 hover:bg-red-50"
+          (click)="clearSession()"
         >
           <i class="lucide lucide-log-out h-5 w-5"></i> Logout
         </button>
@@ -45,33 +46,5 @@
     }
   </div>
 } @else {
-  <button
-    class="flex items-center gap-2 rounded-md px-4 py-2 hover:bg-blue-600 hover:text-white transition cursor-pointer"
-    routerLink="/login"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="h-6 w-6"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M5.121 17.804A9 9 0 1118.879 17.8M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-      />
-    </svg>
-    Login
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="h-4 w-4"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-    </svg>
-  </button>
+  <app-login-button></app-login-button>
 }
