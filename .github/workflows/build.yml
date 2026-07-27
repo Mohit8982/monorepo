@@ -16,25 +16,27 @@ jobs:
 
     outputs:
       backend: ${{ steps.filter.outputs.backend }}
-      frontend: ${{ steps.filter.outputs.frontend }}
+      # frontend: ${{ steps.filter.outputs.frontend }}
+      frontend_ang: ${{ steps.filter.outputs.frontend_ang }}
       shared: ${{ steps.filter.outputs.shared }}
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Detect Changed Files
-        id: filter
+      - id: filter
         uses: dorny/paths-filter@v3
         with:
           filters: |
             backend:
-              - 'apps/api/**'
+              - 'apps/api_v2/**'
 
-            frontend:
-              - 'apps/e-comm/**'
+            # frontend:
+            #   - 'apps/e-comm/**'
+
+            frontend_ang:
+              - 'apps/angular-ecomm/**'
 
             shared:
               - 'packages/ui/**'
@@ -43,9 +45,9 @@ jobs:
               - 'pnpm-workspace.yaml'
               - 'turbo.json'
 
-  ####################################################
-  # BACKEND BUILD
-  ####################################################
+  ################################################################################
+  # BACKEND
+  ################################################################################
 
   backend:
     name: Build Backend
@@ -57,27 +59,21 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: read
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
+      - uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: ${{ env.AWS_REGION }}
 
-      - name: Login to Amazon ECR
-        uses: aws-actions/amazon-ecr-login@v2
+      - uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build Backend Image
         run: |
           docker build \
-            -f apps/api/Dockerfile \
+            -f apps/api_v2/Dockerfile \
             -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/${{ secrets.ECR_BACKEND_REPO }}:${{ github.sha }} \
             -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/${{ secrets.ECR_BACKEND_REPO }}:latest \
             .
@@ -85,63 +81,91 @@ jobs:
       - name: Push Backend Image
         run: |
           docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/${{ secrets.ECR_BACKEND_REPO }}:${{ github.sha }}
-
           docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/${{ secrets.ECR_BACKEND_REPO }}:latest
 
-  ####################################################
-  # FRONTEND BUILD
-  ####################################################
+  ################################################################################
+  # REACT
+  ################################################################################
 
-  frontend:
-    name: Build Frontend
+  # frontend:
+  #   name: Build React Frontend
+  #   needs: detect-changes
+
+  #   if: |
+  #     needs.detect-changes.outputs.frontend == 'true' ||
+  #     needs.detect-changes.outputs.shared == 'true'
+
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - uses: actions/checkout@v4
+
+  #     - uses: aws-actions/configure-aws-credentials@v4
+  #       with:
+  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #         aws-region: ${{ env.AWS_REGION }}
+
+  #     - uses: aws-actions/amazon-ecr-login@v2
+
+  #     - name: Build React Image
+  #       run: |
+  #         docker build \
+  #           -f apps/e-comm/Dockerfile \
+  #           -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/${{ secrets.ECR_FRONTEND_REPO }}:${{ github.sha }} \
+  #           -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/${{ secrets.ECR_FRONTEND_REPO }}:latest \
+  #           .
+
+  #     - name: Push React Image
+  #       run: |
+  #         docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/${{ secrets.ECR_FRONTEND_REPO }}:${{ github.sha }}
+  #         docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/${{ secrets.ECR_FRONTEND_REPO }}:latest
+
+  ################################################################################
+  # ANGULAR
+  ################################################################################
+
+  angular:
+    name: Build Angular Frontend
     needs: detect-changes
 
     if: |
-      needs.detect-changes.outputs.frontend == 'true' ||
+      needs.detect-changes.outputs.frontend_ang == 'true' ||
       needs.detect-changes.outputs.shared == 'true'
 
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: read
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
+      - uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: ${{ env.AWS_REGION }}
 
-      - name: Login to Amazon ECR
-        uses: aws-actions/amazon-ecr-login@v2
+      - uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build Frontend Image
+      - name: Build Angular Image
         run: |
           docker build \
-            -f apps/e-comm/Dockerfile \
-            -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/${{ secrets.ECR_FRONTEND_REPO }}:${{ github.sha }} \
-            -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/${{ secrets.ECR_FRONTEND_REPO }}:latest \
+            -f apps/angular-ecomm/Dockerfile \
+            -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/${{ secrets.ECR_FRONTEND_REPO_ANG }}:${{ github.sha }} \
+            -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/${{ secrets.ECR_FRONTEND_REPO_ANG }}:latest \
             .
 
-      - name: Push Frontend Image
+      - name: Push Angular Image
         run: |
-          docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/${{ secrets.ECR_FRONTEND_REPO }}:${{ github.sha }}
+          docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/${{ secrets.ECR_FRONTEND_REPO_ANG }}:${{ github.sha }}
+          docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/${{ secrets.ECR_FRONTEND_REPO_ANG }}:latest
 
-          docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/${{ secrets.ECR_FRONTEND_REPO }}:latest
-
-  ####################################################
-  # BACKEND DEPLOY
-  ####################################################
+  ################################################################################
+  # DEPLOY BACKEND
+  ################################################################################
 
   deploy-backend:
     name: Deploy Backend
-    needs:
-      - detect-changes
-      - backend
+    needs: [detect-changes, backend]
 
     if: |
       needs.detect-changes.outputs.backend == 'true' ||
@@ -149,30 +173,20 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: read
-      id-token: write
-
     steps:
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
+      - uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: ${{ env.AWS_REGION }}
 
-      - name: Verify AWS Identity
-        run: aws sts get-caller-identity
-
-      - name: Download Current Task Definition
-        run: |
+      - run: |
           aws ecs describe-task-definition \
             --task-definition ${{ secrets.BACKEND_TASK_DEFINITION }} \
             --query taskDefinition \
             > task-definition.json
 
-      - name: Clean Task Definition
-        run: |
+      - run: |
           jq 'del(
             .taskDefinitionArn,
             .revision,
@@ -181,66 +195,106 @@ jobs:
             .compatibilities,
             .registeredAt,
             .registeredBy
-          )' task-definition.json > cleaned-task-definition.json
+          )' task-definition.json > cleaned.json
 
-          mv cleaned-task-definition.json task-definition.json
+          mv cleaned.json task-definition.json
 
-      - name: Update Task Definition Image
-        id: task-def
+      - id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: task-definition.json
           container-name: ${{ secrets.BACKEND_CONTAINER_NAME }}
           image: ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_BACKEND_REPO }}:${{ github.sha }}
 
-      - name: Deploy Backend Service
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+      - uses: aws-actions/amazon-ecs-deploy-task-definition@v2
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: ${{ secrets.BACKEND_SERVICE }}
           cluster: ${{ secrets.ECS_CLUSTER }}
+          service: ${{ secrets.BACKEND_SERVICE }}
           wait-for-service-stability: true
 
-  ####################################################
-  # FRONTEND DEPLOY
-  ####################################################
+  ################################################################################
+  # DEPLOY REACT
+  ################################################################################
 
-  deploy-frontend:
-    name: Deploy Frontend
-    needs:
-      - detect-changes
-      - frontend
+  # deploy-frontend:
+  #   name: Deploy React
+  #   needs: [detect-changes, frontend]
+
+  #   if: |
+  #     needs.detect-changes.outputs.frontend == 'true' ||
+  #     needs.detect-changes.outputs.shared == 'true'
+
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - uses: aws-actions/configure-aws-credentials@v4
+  #       with:
+  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #         aws-region: ${{ env.AWS_REGION }}
+
+  #     - run: |
+  #         aws ecs describe-task-definition \
+  #           --task-definition ${{ secrets.FRONTEND_TASK_DEFINITION }} \
+  #           --query taskDefinition \
+  #           > task-definition.json
+
+  #     - run: |
+  #         jq 'del(
+  #           .taskDefinitionArn,
+  #           .revision,
+  #           .status,
+  #           .requiresAttributes,
+  #           .compatibilities,
+  #           .registeredAt,
+  #           .registeredBy
+  #         )' task-definition.json > cleaned.json
+
+  #         mv cleaned.json task-definition.json
+
+  #     - id: task-def
+  #       uses: aws-actions/amazon-ecs-render-task-definition@v1
+  #       with:
+  #         task-definition: task-definition.json
+  #         container-name: ${{ secrets.FRONTEND_CONTAINER_NAME }}
+  #         image: ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_FRONTEND_REPO }}:${{ github.sha }}
+
+  #     - uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+  #       with:
+  #         task-definition: ${{ steps.task-def.outputs.task-definition }}
+  #         cluster: ${{ secrets.ECS_CLUSTER }}
+  #         service: ${{ secrets.FRONTEND_SERVICE }}
+  #         wait-for-service-stability: true
+
+  ################################################################################
+  # DEPLOY ANGULAR
+  ################################################################################
+
+  deploy-angular:
+    name: Deploy Angular
+    needs: [detect-changes, angular]
 
     if: |
-      needs.detect-changes.outputs.frontend == 'true' ||
+      needs.detect-changes.outputs.frontend_ang == 'true' ||
       needs.detect-changes.outputs.shared == 'true'
 
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: read
-      id-token: write
-
     steps:
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
+      - uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: ${{ env.AWS_REGION }}
 
-      - name: Verify AWS Identity
-        run: aws sts get-caller-identity
-
-      - name: Download Current Task Definition
-        run: |
+      - run: |
           aws ecs describe-task-definition \
-            --task-definition ${{ secrets.FRONTEND_TASK_DEFINITION }} \
+            --task-definition ${{ secrets.ANGULAR_FRONTEND_TASK_DEFINITION }} \
             --query taskDefinition \
             > task-definition.json
 
-      - name: Clean Task Definition
-        run: |
+      - run: |
           jq 'del(
             .taskDefinitionArn,
             .revision,
@@ -249,22 +303,20 @@ jobs:
             .compatibilities,
             .registeredAt,
             .registeredBy
-          )' task-definition.json > cleaned-task-definition.json
+          )' task-definition.json > cleaned.json
 
-          mv cleaned-task-definition.json task-definition.json
+          mv cleaned.json task-definition.json
 
-      - name: Update Task Definition Image
-        id: task-def
+      - id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: task-definition.json
-          container-name: ${{ secrets.FRONTEND_CONTAINER_NAME }}
-          image: ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_FRONTEND_REPO }}:${{ github.sha }}
+          container-name: ${{ secrets.ANGULAR_FRONTEND_CONTAINER_NAME }}
+          image: ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_FRONTEND_REPO_ANG }}:${{ github.sha }}
 
-      - name: Deploy Frontend Service
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+      - uses: aws-actions/amazon-ecs-deploy-task-definition@v2
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: ${{ secrets.FRONTEND_SERVICE }}
           cluster: ${{ secrets.ECS_CLUSTER }}
+          service: ${{ secrets.ANGULAR_FRONTEND_SERVICE }}
           wait-for-service-stability: true

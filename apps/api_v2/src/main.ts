@@ -22,6 +22,8 @@ async function bootstrap() {
     credentials: true,
   });
 
+  app.setGlobalPrefix("api");
+
   const config = new DocumentBuilder()
     .setTitle("API v2")
     .setDescription("API v2 (NestJS) - Auth & Products")
@@ -37,9 +39,9 @@ async function bootstrap() {
     console.warn("Swagger setup skipped:", err?.message ?? err);
   }
 
-  const port = process.env.PORT || 3001;
+  const port = process.env.PORT || 3000;
   await app.listen(port);
-  console.log(`✅ Server running on http://localhost:${port}`);
+  console.log(`✅ Server running on http://localhost:${port}/api`);
   console.log(`📚 Swagger docs available at http://localhost:${port}/docs`);
 }
 

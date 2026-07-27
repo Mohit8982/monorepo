@@ -1,16 +1,18 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ApiService } from '../core/services/api';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Product {
   private http = inject(HttpClient);
+  private api = inject(ApiService);
 
   products = signal<any[]>([]);
   loading = signal(false);
 
-  private readonly API_URL = 'http://localhost:3001/products';
+  private readonly API_URL = this.api.products.list;
 
   loadProducts() {
     this.loading.set(true);

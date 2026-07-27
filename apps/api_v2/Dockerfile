@@ -1,39 +1,49 @@
-# =====================
-# Builder
-# =====================
-FROM node:22-alpine AS builder
+# ---------- Base ----------
+FROM node:22-alpine AS base
 
 RUN corepack enable
 
+# ---------- Builder ----------
+FROM base AS builder
+
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY apps/api_v2 ./apps/api_v2
+RUN npm install -g turbo
+
+COPY . .
+
+RUN turbo prune @repo/api_v2 --docker
+
+# ---------- Installer ----------
+FROM base AS installer
+
+WORKDIR /app
+
+COPY --from=builder /app/out/json/ .
+COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 
 RUN pnpm install --frozen-lockfile
-RUN pnpm --filter @repo/api_v2 build
 
+COPY --from=builder /app/out/full/ .
 
-# =====================
-# Runner
-# =====================
-FROM node:22-alpine AS runner
+RUN pnpm turbo run build --filter=@repo/api_v2
 
-RUN corepack enable
+# ---------- Runner ----------
+FROM base AS runner
 
 WORKDIR /app
 
-COPY apps/api_v2/package.json ./package.json
-COPY pnpm-lock.yaml ./
+RUN addgroup -S nodejs && adduser -S nest -G nodejs
 
-RUN pnpm install --prod --ignore-scripts \
-    && rm -rf /root/.local/share/pnpm \
-    && rm -rf /root/.cache
+COPY --from=installer --chown=nest:nodejs /app .
 
-COPY --from=builder /app/apps/api_v2/dist ./dist
+USER nest
 
-ENV NODE_ENV=production
+WORKDIR /app/apps/api_v2
 
-EXPOSE 3001
+EXPOSE 3000
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+    CMD wget --spider http://localhost:3000/health || exit 1
 
 CMD ["node", "dist/main.js"]

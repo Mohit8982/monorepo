@@ -27,7 +27,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: "internal_error" });
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 if (import.meta.url === `file://${process.argv[1]}`) {
   app.listen(PORT, () => {
     // eslint-disable-next-line no-console
