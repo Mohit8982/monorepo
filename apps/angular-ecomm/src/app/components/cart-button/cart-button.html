@@ -1,6 +1,6 @@
 <button
   routerLink="/cart"
-  class="flex items-center gap-2 rounded-md px-4 py-2 hover:bg-gray-100 cursor-pointer"
+  class="relative flex items-center gap-2 rounded-md px-4 py-2 hover:bg-gray-100 cursor-pointer"
 >
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -16,5 +16,14 @@
       d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1 5h13M9 21a1 1 0 100-2 1 1 0 000 2zm10 0a1 1 0 100-2 1 1 0 000 2"
     />
   </svg>
+
   Cart
+
+  @if (cartService.cartCount() > 0) {
+    <span
+      class="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white"
+    >
+      {{ cartService.cartCount() }}
+    </span>
+  }
 </button>

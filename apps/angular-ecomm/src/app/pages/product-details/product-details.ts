@@ -4,6 +4,7 @@ import { Product } from '../../core/services/product';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
 import { KeyValuePipe } from '@angular/common';
+import { CartService } from '../../core/services/cart-service';
 
 @Component({
   selector: 'app-product-details',
@@ -14,6 +15,7 @@ import { KeyValuePipe } from '@angular/common';
 export class ProductDetails {
   route = inject(ActivatedRoute);
   productService = inject(Product);
+  cartService = inject(CartService);
   id = toSignal(this.route.paramMap.pipe(map((params) => Number(params.get('id')))), {
     initialValue: 0,
   });
@@ -25,5 +27,9 @@ export class ProductDetails {
         this.productService.getProductById(id);
       }
     });
+  }
+
+  onAddToCart(productId: string) {
+    this.cartService.addToCart(productId.toString(), 1);
   }
 }

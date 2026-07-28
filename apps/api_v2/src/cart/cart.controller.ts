@@ -28,6 +28,13 @@ export class CartController {
     return this.cartService.getCart(userId);
   }
 
+  @UseGuards(JwtGuard)
+  @Get("/count")
+  getCartCount(@Request() req: any) {
+    const userId = this.extractUserId(req.user);
+    return this.cartService.getCartCount(userId);
+  }
+
   private extractUserId(user: any): string {
     return (
       user?.sub?.toString() ||

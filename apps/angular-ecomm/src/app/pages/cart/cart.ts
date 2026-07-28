@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CartItems } from '../../components/cart-items/cart-items';
 import { Auth } from '../../core/services/auth';
 import { EmptyCart } from '../../components/empty-cart/empty-cart';
+import { CartService } from '../../core/services/cart-service';
 @Component({
   selector: 'app-cart',
   imports: [CartItems, EmptyCart],
@@ -10,4 +11,9 @@ import { EmptyCart } from '../../components/empty-cart/empty-cart';
 })
 export class Cart {
   auth = inject(Auth);
+  cartService = inject(CartService);
+
+  constructor() {
+    this.cartService.loadCart();
+  }
 }

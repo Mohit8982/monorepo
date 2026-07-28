@@ -36,6 +36,7 @@
           <div class="mt-6 flex gap-4">
             <button
               class="flex-1 rounded bg-[#ff9f00] py-4 text-lg font-semibold text-white hover:bg-[#f39200]"
+              (click)="onAddToCart(productService.productData()?.id)"
             >
               🛒 Add to Cart
             </button>
