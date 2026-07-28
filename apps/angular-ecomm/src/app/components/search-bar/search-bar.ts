@@ -35,9 +35,7 @@ export class SearchBar {
 
   openProduct(id: number) {
     this.searchText.set('');
-
     this.productService.searchResults.set([]);
-
     this.router.navigate(['/products', id]); // or product.id
   }
 }

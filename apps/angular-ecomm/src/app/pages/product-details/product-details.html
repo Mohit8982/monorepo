@@ -52,39 +52,28 @@
       <!-- Right Section -->
       <div>
         <h1 class="text-2xl font-medium text-gray-800">
-          Apple iPhone 16 Pro Max (Black Titanium, 256 GB)
+          {{ productService.productData()?.name }}
         </h1>
 
         <div class="mt-3 flex items-center gap-3">
           <span class="rounded bg-green-600 px-2 py-1 text-sm text-white"> 4.6 ★ </span>
-
-          <span class="text-sm text-gray-500"> 18,254 Ratings & 1,720 Reviews </span>
+          <span class="text-sm text-gray-500">
+            {{ productService.productData()?.rating }} Ratings &
+            {{ productService.productData()?.reviews }} Reviews
+          </span>
         </div>
 
         <div class="mt-6 flex items-center gap-3">
           <span class="text-4xl font-semibold"> ₹{{ productService.productData()?.price }} </span>
-
-          <span class="text-xl text-gray-400 line-through"> ₹1,59,900 </span>
-
           <span class="text-lg font-semibold text-green-600"> 9% off </span>
         </div>
 
-        <!-- Offers -->
-
         <div class="mt-8">
           <h2 class="mb-3 text-lg font-semibold">Available Offers</h2>
-
           <div class="space-y-3">
-            <p>
-              ✅ <span class="font-semibold">Bank Offer</span> 10% Instant Discount on HDFC Bank
-              Cards
-            </p>
-
-            <p>✅ <span class="font-semibold">Special Price</span> Get extra ₹5,000 off</p>
-
-            <p>✅ <span class="font-semibold">No Cost EMI</span> Starting from ₹5,999/month</p>
-
-            <p>✅ <span class="font-semibold">Exchange Offer</span> Up to ₹55,000 off</p>
+            @for (offer of productService.productData()?.offers; track offer) {
+              <p>✅ <span class="font-semibold">Bank Offer</span> {{ offer }}</p>
+            }
           </div>
         </div>
 
@@ -94,8 +83,11 @@
           <h2 class="mb-2 text-lg font-semibold">Delivery</h2>
 
           <p class="text-gray-700">
-            Deliver to <strong>452001</strong> • Delivery by
-            <span class="font-semibold">Tomorrow</span>
+            Deliver to <strong>{{ productService.productData()?.delivery?.pincode }}</strong> •
+            Delivery by
+            <span class="font-semibold">{{
+              productService.productData()?.delivery?.expected
+            }}</span>
           </p>
         </div>
 
@@ -105,17 +97,9 @@
           <h2 class="mb-4 text-lg font-semibold">Highlights</h2>
 
           <ul class="list-disc space-y-2 pl-5 text-gray-700">
-            <li>256 GB ROM</li>
-
-            <li>17.43 cm (6.9 inch) Super Retina XDR Display</li>
-
-            <li>48MP + 48MP + 12MP Triple Camera</li>
-
-            <li>12MP Front Camera</li>
-
-            <li>A18 Pro Chip</li>
-
-            <li>1 Year Apple Warranty</li>
+            @for (highlight of productService.productData()?.highlights; track highlight) {
+              <li>{{ highlight }}</li>
+            }
           </ul>
         </div>
       </div>
@@ -125,11 +109,8 @@
 
     <div class="mt-12 rounded border p-6">
       <h2 class="mb-4 text-2xl font-semibold">Product Description</h2>
-
       <p class="leading-8 text-gray-700">
-        Experience the power of the latest Apple A18 Pro chip with exceptional performance, stunning
-        photography, an immersive Super Retina XDR display, and all-day battery life. Crafted with
-        premium titanium, the iPhone 16 Pro Max is built for durability and performance.
+        {{ productService.productData()?.description }}
       </p>
     </div>
 
@@ -137,37 +118,17 @@
 
     <div class="mt-8 rounded border p-6">
       <h2 class="mb-6 text-2xl font-semibold">Specifications</h2>
-
-      <div class="grid gap-4 md:grid-cols-2">
-        <div class="border-b pb-3">
-          <span class="font-semibold">Brand</span>
-          <span class="float-right">Apple</span>
-        </div>
-
-        <div class="border-b pb-3">
-          <span class="font-semibold">Model</span>
-          <span class="float-right">iPhone 16 Pro Max</span>
-        </div>
-
-        <div class="border-b pb-3">
-          <span class="font-semibold">Storage</span>
-          <span class="float-right">256 GB</span>
-        </div>
-
-        <div class="border-b pb-3">
-          <span class="font-semibold">RAM</span>
-          <span class="float-right">8 GB</span>
-        </div>
-
-        <div class="border-b pb-3">
-          <span class="font-semibold">Display</span>
-          <span class="float-right">6.9"</span>
-        </div>
-
-        <div class="border-b pb-3">
-          <span class="font-semibold">Battery</span>
-          <span class="float-right">4685 mAh</span>
-        </div>
+      <div class="grid grid-cols-2 gap-4">
+        @for (spec of productService.productData()?.specifications | keyvalue; track spec.key) {
+          <div class="border rounded p-3">
+            <p class="text-sm text-gray-500 capitalize">
+              {{ spec.key }}
+            </p>
+            <p class="font-medium">
+              {{ spec.value }}
+            </p>
+          </div>
+        }
       </div>
     </div>
   </div>

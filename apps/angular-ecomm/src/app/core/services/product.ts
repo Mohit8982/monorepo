@@ -76,6 +76,7 @@ export class Product {
   getProductById(id: number) {
     this.http.get(`${this.API_URL}/${id}`).subscribe({
       next: (product) => {
+        console.log(product);
         this.productData.set(product);
       },
       error: () => {

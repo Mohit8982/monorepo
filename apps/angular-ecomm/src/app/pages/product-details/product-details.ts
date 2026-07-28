@@ -1,20 +1,29 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from '../../core/services/product';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs/operators';
+import { KeyValuePipe } from '@angular/common';
 
 @Component({
   selector: 'app-product-details',
-  imports: [],
+  imports: [KeyValuePipe],
   templateUrl: './product-details.html',
   styleUrl: './product-details.css',
 })
 export class ProductDetails {
   route = inject(ActivatedRoute);
   productService = inject(Product);
-  id = Number(this.route.snapshot.params['id']);
+  id = toSignal(this.route.paramMap.pipe(map((params) => Number(params.get('id')))), {
+    initialValue: 0,
+  });
 
   constructor() {
-    this.productService.getProductById(this.id);
-    this.productService.searchResults.set([]);
+    effect(() => {
+      const id = this.id();
+      if (id) {
+        this.productService.getProductById(id);
+      }
+    });
   }
 }
