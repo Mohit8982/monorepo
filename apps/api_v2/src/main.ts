@@ -4,6 +4,8 @@ import { AppModule } from "./app.module";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { AuthModule } from "./auth/auth.module";
 import { ProductsModule } from "./products/products.module";
+import { OrdersModule } from "./orders/orders.module";
+import { CartModule } from "./cart/cart.module";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -32,7 +34,7 @@ async function bootstrap() {
     .build();
   try {
     const document = SwaggerModule.createDocument(app, config, {
-      include: [AuthModule, ProductsModule],
+      include: [AuthModule, ProductsModule, OrdersModule, CartModule],
     });
     SwaggerModule.setup("docs", app, document);
   } catch (err: any) {

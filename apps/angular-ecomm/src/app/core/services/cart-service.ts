@@ -12,9 +12,17 @@ export class CartService {
   cartItems = signal<any[]>([]);
   summary = signal<any>(null);
   cartCount = signal<number>(0);
-
   checkoutLoading = signal(false);
   orderPlaced = signal(false);
+  showModal = signal(false);
+
+  openModal() {
+    this.showModal.set(true);
+  }
+
+  closeModal() {
+    this.showModal.set(false);
+  }
 
   proceedToCheckout() {
     this.checkoutLoading.set(true);
@@ -26,7 +34,7 @@ export class CartService {
           this.loadCart();
           this.getCartCount();
           this.checkoutLoading.set(false);
-          this.orderPlaced.set(true);
+          this.openModal();
         },
         error: () => {
           alert('Payment Service Temporarily Down');

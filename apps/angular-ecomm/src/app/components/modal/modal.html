@@ -1,0 +1,18 @@
+@if (isOpen()) {
+  <div class="fixed inset-0 z-100000 flex items-center justify-center">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-black/50" (click)="onBackdropClick()"></div>
+
+    <!-- Modal -->
+    <div class="relative z-10 w-full max-w-lg rounded-xl bg-white p-6 shadow-xl">
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl font-bold"></h2>
+        <button class="text-2xl cursor-pointer" (click)="close.emit()">×</button>
+      </div>
+
+      <div class="mt-6">
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </div>
+}

@@ -1,22 +1,19 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { CommonModule, DatePipe, DecimalPipe, TitleCasePipe } from '@angular/common';
+import { OrderService } from '../../core/services/order-service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-orders',
-  imports: [],
+  imports: [CommonModule, RouterModule, DatePipe, DecimalPipe, TitleCasePipe],
   templateUrl: './orders.html',
   styleUrl: './orders.css',
 })
 export class Orders {
-  http = inject(HttpClient);
-  orders = signal<any[]>([]);
+  orderService = inject(OrderService);
 
   constructor() {
-    this.http.get('').subscribe({
-      next: (orders: any) => {
-        this.orders.set(orders);
-      },
-      error: (err) => {},
-    });
+    this.orderService.getOrder();
+    console.log(this.orderService.orders);
   }
 }
