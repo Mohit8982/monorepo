@@ -5,6 +5,7 @@ import { ProductDetails } from './pages/product-details/product-details';
 import { Cart } from './pages/cart/cart';
 import { Login } from './pages/login/login';
 import { NotFound } from './pages/not-found/not-found';
+import { Orders } from './pages/orders/orders';
 
 export const routes: Routes = [
   {
@@ -26,6 +27,10 @@ export const routes: Routes = [
   {
     path: 'login',
     component: Login,
+  },
+  {
+    path: 'orders',
+    component: Orders,
   },
   // Always keep this LAST
   {

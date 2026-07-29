@@ -22,5 +22,6 @@ export class ApiService {
     list: `${this.base}/cart`,
     add: `${this.base}/cart`,
     remove: (id: number) => `${this.base}/cart/${id}`,
+    payment: `${this.base}/cart/payment`,
   };
 }

@@ -35,6 +35,12 @@ export class CartController {
     return this.cartService.getCartCount(userId);
   }
 
+  @Post("payment")
+  @UseGuards(JwtGuard)
+  async payment(@Request() req: any) {
+    return this.cartService.processPayment(req.user.id.toString());
+  }
+
   private extractUserId(user: any): string {
     return (
       user?.sub?.toString() ||

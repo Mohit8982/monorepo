@@ -21,8 +21,18 @@ export class CartService {
     this.orderPlaced.set(false);
 
     setTimeout(() => {
-      this.checkoutLoading.set(false);
-      this.orderPlaced.set(true);
+      this.http.post(`${this.api.cart.payment}`, {}).subscribe({
+        next: () => {
+          this.loadCart();
+          this.getCartCount();
+          this.checkoutLoading.set(false);
+          this.orderPlaced.set(true);
+        },
+        error: () => {
+          alert('Payment Service Temporarily Down');
+          this.checkoutLoading.set(false);
+        },
+      });
     }, 3000);
   }
 

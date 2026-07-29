@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { AddToCartDto } from "./dto/add-to-cart.dto";
 import { productData } from "../data/data";
 
@@ -7,7 +7,17 @@ export type CartItem = {
   quantity: number;
 };
 
+export type Order = {
+  orderId: string;
+  userId: string;
+  items: any[];
+  summary: any;
+  status: string;
+  createdAt: Date;
+};
+
 const cartStore = new Map<string, CartItem[]>();
+export const ordersMap = new Map<string, Order[]>();
 
 @Injectable()
 export class CartService {
@@ -72,5 +82,40 @@ export class CartService {
   getCartCount(userId: string) {
     const cart = cartStore.get(userId) ?? [];
     return cart.reduce((total, item) => total + item.quantity, 0);
+  }
+
+  processPayment(userId: string) {
+    const cart = cartStore.get(userId) ?? [];
+
+    if (cart.length === 0) {
+      throw new NotFoundException("Cart is empty");
+    }
+
+    const cartData = this.getCart(userId);
+    const { cartItems, summary } = cartData;
+
+    const order: Order = {
+      orderId: `ORD-${Date.now()}`,
+      userId,
+      items: cartItems,
+      summary,
+      status: "completed",
+      createdAt: new Date(),
+    };
+
+    // Store in global orders map
+    if (!ordersMap.has(userId)) {
+      ordersMap.set(userId, []);
+    }
+    ordersMap.get(userId)?.push(order);
+
+    // Clear user's cart after successful payment
+    cartStore.delete(userId);
+
+    return {
+      message: "Payment successful",
+      order,
+      statusCode: 200,
+    };
   }
 }
