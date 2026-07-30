@@ -1,16 +1,21 @@
 @if (isOpen()) {
-  <div class="fixed inset-0 z-100000 flex items-center justify-center">
+  <div class="fixed inset-0 z-50 flex items-center justify-center p-4">
     <!-- Backdrop -->
-    <div class="absolute inset-0 bg-black/50" (click)="onBackdropClick()"></div>
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" (click)="onBackdropClick()"></div>
 
     <!-- Modal -->
-    <div class="relative z-10 w-full max-w-lg rounded-xl bg-white p-6 shadow-xl">
-      <div class="flex items-center justify-between">
-        <h2 class="text-xl font-bold"></h2>
-        <button class="text-2xl cursor-pointer" (click)="close.emit()">×</button>
-      </div>
+    <div
+      class="relative z-10 w-full max-w-lg rounded-2xl bg-white shadow-2xl animate-in fade-in zoom-in duration-200"
+    >
+      <!-- Close Button -->
+      <button
+        class="absolute top-4 right-4 text-2xl text-gray-500 transition hover:text-gray-700 cursor-pointer"
+        (click)="close.emit()"
+      >
+        &times;
+      </button>
 
-      <div class="mt-6">
+      <div class="p-6">
         <ng-content></ng-content>
       </div>
     </div>

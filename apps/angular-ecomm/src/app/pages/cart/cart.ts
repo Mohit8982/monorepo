@@ -15,7 +15,6 @@ export class Cart {
   auth = inject(Auth);
   cartService = inject(CartService);
 
-
   constructor() {
     this.cartService.loadCart();
   }
