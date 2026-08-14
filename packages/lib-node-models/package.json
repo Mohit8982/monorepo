@@ -1,0 +1,22 @@
+{
+  "name": "@repo/lib-node-models",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "prisma:generate": "prisma generate --schema=./prisma/schema.prisma",
+    "prisma:migrate": "prisma migrate dev --schema=./prisma/schema.prisma",
+    "prisma:studio": "prisma studio --schema=./prisma/schema.prisma",
+    "db:seed": "tsx prisma/seed.ts",
+    "db:seed:categories": "tsx prisma/category.seed.ts",
+    "db:seed:products": "tsx prisma/products.seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "6.19.0"
+  },
+  "devDependencies": {
+    "prisma": "6.19.0",
+    "tsx": "^4.23.12"
+  }
+}
