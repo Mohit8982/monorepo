@@ -4,7 +4,8 @@
   "packageManager": "pnpm@11.9.0",
   "scripts": {
     "dev:ecomm": "pnpm --filter e-comm dev",
-    "dev:dashboard": "pnpm --filter dashboard dev",
+    "dev:api_v2": "pnpm --filter api_v2 dev",
+    "dev:angular-ecomm": "pnpm --filter angular-ecomm dev",
     "build": "turbo run build",
     "dev": "turbo run dev"
   },
