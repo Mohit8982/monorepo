@@ -10,12 +10,14 @@
     "prisma:studio": "prisma studio --schema=./prisma/schema.prisma",
     "db:seed": "tsx prisma/seed.ts",
     "db:seed:categories": "tsx prisma/category.seed.ts",
-    "db:seed:products": "tsx prisma/products.seed.ts"
+    "db:seed:products": "tsx prisma/products.seed.ts",
+    "db:seed:addresses": "tsx prisma/address.seed.ts"
   },
   "dependencies": {
     "@prisma/client": "6.19.0"
   },
   "devDependencies": {
+    "@types/node": "^26.2.0",
     "prisma": "6.19.0",
     "tsx": "^4.23.12"
   }

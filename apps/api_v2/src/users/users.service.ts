@@ -24,7 +24,17 @@ export class UsersService {
     return this.prisma.user.create({
       data: {
         name: dto.name,
+        username: dto.name,
         email: dto.email,
+      },
+    });
+  }
+
+  async getUserAddress(userId: number) {
+    return this.prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        addresses: true,
       },
     });
   }

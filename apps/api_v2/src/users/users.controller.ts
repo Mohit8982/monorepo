@@ -28,4 +28,9 @@ export class UsersController {
   create(@Body() dto: CreateUserDto) {
     return this.usersService.create(dto);
   }
+
+  @Get(":id/addresses")
+  getUserAddress(@Param("id", ParseIntPipe) id: number) {
+    return this.usersService.getUserAddress(id);
+  }
 }

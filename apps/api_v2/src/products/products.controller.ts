@@ -54,7 +54,6 @@ export class ProductsController {
     @Query("page") page?: string,
     @Query("limit") limit?: string,
   ) {
-    console.log("query::", q);
     if (!q) {
       throw new BadRequestException("q query param is required");
     }
